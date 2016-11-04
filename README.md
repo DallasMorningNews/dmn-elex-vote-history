@@ -1,5 +1,7 @@
 # dmn-elex-vote-history
 
+[![npm version](https://badge.fury.io/js/dmn-elex-vote-history.svg)](https://badge.fury.io/js/dmn-elex-vote-history)
+
 Chart module for historical county voting data.
 
 ![](preview.png)
