@@ -1,6 +1,6 @@
 {
   "name": "dmn-elex-vote-history",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "author": "",
   "main": "src/js/chart.js",

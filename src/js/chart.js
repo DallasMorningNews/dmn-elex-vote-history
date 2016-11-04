@@ -180,7 +180,7 @@ export default () => ({
         counties.enter().append('path') // Enter
           .merge(counties) // Enter + Update
             .attr('d', path)
-            .style('fill',(d) => d.id.toString() === data.code ? 'orange' : 'rgba(0,0,0,.1)')
+            .style('fill',(d) => d.id.toString() === data.code ? 'rgba(0,0,0,.6)' : 'rgba(0,0,0,.1)')
             .style('stroke-width', 0)
             .attr('class', (d) => `county ${d.id}`);
 
