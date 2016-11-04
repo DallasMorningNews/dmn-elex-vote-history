@@ -17,7 +17,7 @@
 // texasChoropleth is defined in global-chart.js
 var myChart = new VoteHistory();
 
-// This is the initial draw, which needs selection string and data
+// This is the initial draw, which needs selection string, data and geoData
 $.getJSON('data/tx-counties-small.topojson', function(geoData){
   $.getJSON('http://elections.dallasnews.com/data/historical/fips/48113.json', function(data){
     myChart.create("#chart", data, geoData);

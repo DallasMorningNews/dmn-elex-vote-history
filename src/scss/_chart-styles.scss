@@ -75,6 +75,11 @@
     text{
       font-size: 13px;
       fill:grey;
+      &.label{
+        font-style: italic;
+        font-size: 12px;
+        transform:translate(0,0);
+      }
     }
     &.x line{
       display:none;
@@ -83,11 +88,6 @@
       text{
         text-anchor:start;
         transform:translate(0px,-10px);
-      }
-      text.label{
-        font-style: italic;
-        font-size: 12px;
-        transform:translate(0,0);
       }
       line{
         stroke: $grey-minor;

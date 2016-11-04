@@ -12,7 +12,7 @@ export default () => ({
   init: function() {
 
     // Default chart properties
-    var geoData = [];
+    let geoData = [];
 
     // Inner chart function
     function chart(selection){
@@ -79,7 +79,7 @@ export default () => ({
         const xAxis = d3.axisBottom(xScale)
             .tickFormat(formatYear)
             .tickValues((() => _.map(demData, (o) => o.x))())
-            .tickPadding(5);
+            .tickPadding(0);
         const yScale = d3.scaleLinear()
             .domain([1, 0])
             .range([0, innerHeight]);
@@ -90,21 +90,19 @@ export default () => ({
             .tickPadding(0);
 
 
-
         // STATS
         const statRun = (data) => regression(
           'linear',
           _.map(data, (d) => [d.year, d.y])
         );
 
-
-        // Multiple to get integer percents
         const demSlope = statRun(demData).equation[0];
         const repSlope = statRun(repData).equation[0];
         const trend = repSlope - demSlope;
 
-        const furniture = () => {
 
+        // All appends not in an update pattern...
+        const furniture = () => {
           d3.select(this).append("h3");
 
           const svg = d3.select(this).append("svg")
@@ -121,11 +119,15 @@ export default () => ({
             .append("text")
               .attr("class", "label")
               .attr("x", 0)
-              .attr("y", -25)
+              .attr("y", -12)
               .style("text-anchor", "start")
               .text("Average percent of vote");
           g.append("g")
-              .attr("class", "x axis");
+              .attr("class", "x axis")
+            .append("text")
+              .attr("class", "label")
+              .style("text-anchor", "end")
+              .text("General elections");
 
           d3.select(this).append('p')
               .attr("class", "footnote")
@@ -151,7 +153,7 @@ export default () => ({
 
         d3.select(this).select(".trendLab").select('span')
           .attr('class', () => trend >= 0 ? 'rep' : 'dem')
-          .text(() => trend >= 0 ? `R ${percent(trend)}` : `D ${percent(trend)}`);
+          .text(() => trend >= 0 ? `R ${percent(trend)}` : `D ${percent(Math.abs(trend))}`);
 
 
         const svg = d3.select(this).select('svg')
@@ -167,19 +169,20 @@ export default () => ({
         const xAxisG = g.select('.x.axis')
             .attr("transform",`translate(0,${innerHeight})`);
 
+        xAxisG.select("text.label")
+          .attr("x", innerWidth + 6)
+          .attr("y", -3);
 
-      const counties = mapG.selectAll("path")
-          .data(counties_geo.features, (d)=> d.id);
 
-      counties.enter().append('path') // Enter
-        .merge(counties) // Enter + Update
-          .attr('d', path)
-          .style('fill',(d) => d.id.toString() === data.code ? 'orange' : 'rgba(0,0,0,.1)')
-          .style('stroke-width', 0)
-          .attr('class', function(d){
-            return 'county ' + d.id;
-          });
+        const counties = mapG.selectAll("path")
+            .data(counties_geo.features, (d)=> d.id);
 
+        counties.enter().append('path') // Enter
+          .merge(counties) // Enter + Update
+            .attr('d', path)
+            .style('fill',(d) => d.id.toString() === data.code ? 'orange' : 'rgba(0,0,0,.1)')
+            .style('stroke-width', 0)
+            .attr('class', (d) => `county ${d.id}`);
 
         yAxisG.call(yAxis);
         xAxisG.call(xAxis);
@@ -220,6 +223,8 @@ export default () => ({
             .attr("stroke-dashoffset", 0);
 
 
+        // UNCOMMENT FOLLOWING TO ADD a nice wilkinson dot plot for uncontested
+        // races that didn't make the editor's cut...
 
         // const uncontestedR = g.selectAll("g.uncontestedR")
         //   .data(repUncontestData , (d) => d.year);
@@ -277,11 +282,6 @@ export default () => ({
         // .attr('cy', innerHeight + 40)
         // .remove();
 
-
-
-
-
-
       });
     }
 
@@ -299,7 +299,7 @@ export default () => ({
   // This function actually draws the chart using the
   // reusable init function.
   draw: function(){
-    var chart = this.init()
+    const chart = this.init()
         .geoData(this._geoData);
 
     d3.select(this._selection)
