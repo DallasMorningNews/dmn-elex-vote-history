@@ -1,0 +1,9 @@
+@import 'variables';
+@import 'chart-styles';
+
+#{$VoteHistory-container} {
+  border: 1px dashed red;
+  width: 50%;
+  max-width: 600px;
+  height:400px;
+}

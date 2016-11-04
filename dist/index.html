@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <link rel="stylesheet" href="http://interactives.dallasnews.com/common/fonts/gotham.css" media="screen" title="no title" />
+  <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
+</head>
+
+<body>
+
+<div id='chart'></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="js/global-chart.js"></script>
+
+<script>
+// Global which will contain an instance of our chart
+// texasChoropleth is defined in global-chart.js
+var myChart = new VoteHistory();
+
+// This is the initial draw, which needs selection string and data
+$.getJSON('data/tx-counties-small.topojson', function(geoData){
+  $.getJSON('http://elections.dallasnews.com/data/historical/fips/48113.json', function(data){
+    myChart.create("#chart", data, geoData);
+  });
+});
+
+
+$.getJSON('data/fips.json', function(data){
+  // This is an update to the chart, which only needs new data
+  setInterval(function(){
+    var fips = data[Math.floor(Math.random() * data.length)];
+    $.getJSON('http://elections.dallasnews.com/data/historical/fips/'+fips.code+'.json', function(data){
+      myChart.update(data);
+    });
+  }, 5000);
+});
+
+
+
+</script>
+
+</body>
