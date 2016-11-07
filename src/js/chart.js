@@ -121,7 +121,7 @@ export default () => ({
               .attr("x", 0)
               .attr("y", -12)
               .style("text-anchor", "start")
-              .text("Average percent of vote");
+              .text("Average candidate vote share");
           g.append("g")
               .attr("class", "x axis")
             .append("text")
@@ -135,8 +135,8 @@ export default () => ({
 
           d3.select(this).append('p')
               .attr("class", "footnote")
-              .text(`Data aggregates all contested race results collected by
-                the Secretary of State in general elections.`)
+              .text(`Data aggregates all general election contested race results collected by
+                the secretary of state.`)
 
           d3.select(this).append('div')
             .attr('class','trendLab')
@@ -149,7 +149,7 @@ export default () => ({
           furniture();
         }
 
-        d3.select(this).select("h3").text(`${data.name} county`);
+        d3.select(this).select("h3").text(`${data.name} County`);
 
         d3.select(this).select(".trendLab").select('span')
           .attr('class', () => trend >= 0 ? 'rep' : 'dem')
