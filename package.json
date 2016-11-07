@@ -1,6 +1,6 @@
 {
   "name": "dmn-elex-vote-history",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "author": "",
   "main": "src/js/chart.js",
@@ -24,13 +24,13 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "lodash": "^4.16.6",
-    "regression": "^1.2.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   },
   "dependencies": {
     "d3": "^4.2.8",
+    "regression": "^1.2.1",
     "topojson": "^1.6.27"
   },
   "browserify": {
